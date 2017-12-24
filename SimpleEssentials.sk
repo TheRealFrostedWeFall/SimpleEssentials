@@ -1,0 +1,336 @@
+
+options:
+	Version: V 0.5-A
+	nopermission: &7You do not have the required permissions to execute this command, please contact a server administrator if you think this is wrong!
+	elevatornopermission: &cYou do not have the correct permissions to create Elevator Signs!
+	serverip: play.example.com # <- Put your server IP in here # 
+	discord: example.com # <- Put your discord link in here #
+	buycraft: store.example.com # <- Put your buycraft link in here # 
+	website: example.com # <- Put your website link in here #
+
+# You may edit the following piece of code if you understand how to use Skript		
+command /console [<string>]:
+	description: Lets the player execute console commands ingame!	
+	permission: simpleessentials.console.command
+	permission message: {@nopermission}
+	trigger:
+		if argument 1 is set:
+			execute console command "%argument 1%"
+			send "&9Executed command&7!"
+		else:
+			send "&7Invalid Usage! Try &9/console {command}&7!"
+
+# Information Commands ( Check Options for more info ) #
+			
+command /serverip:
+	description: Lets you see the IP for the server!
+	aliases: /ip, /server, /simpleessentials:serverip
+	permission: simpleessentials.command.serverip
+	permission message: {@nopermission}
+	trigger:
+		message "%newline%&7The current servers ip address is &9{@serverip}%newline%"
+		stop
+command /discord:
+	description: Lets you see the discord link for the server!
+	aliases: /disc, /simpleessentials:discord
+	permission: simpleessentials.command.discord
+	permission message: {@nopermission}
+	trigger:
+		message "%newline%&7The current discord link is &9{@discord}%newline%"
+		stop
+command /store:
+	description: Lets you see the discord link for the server!
+	aliases: /shop, buycraft, /simpleessentials:buycraft, simpleessentials:store, simpleessentials:shop
+	permission: simpleessentials.command.store
+	permission message: {@nopermission}
+	trigger:
+		message "%newline%&7The current store link is &9&o{@buycraft}&r%newline%"
+		stop
+command /website:
+	description: Lets you see the website link for the server!
+	aliases: /site, /serverwebsite, /simpleessentials:website, /simpleessentials:site
+	permission: simpleessentials.command.website
+	permission message: {@nopermission}
+	trigger:
+		message "%newline%&7The current website link is &9&o{@website}&r%newline%"
+		stop
+			
+# Developer Information Commands #
+
+command /simpleessentials:
+	trigger:
+		send "&7A complex alternative to other Essentials Skripts!"
+		send "&7Developer / Creator: &9FrostedWeFall"
+		send "&7Build: &9{@Version}"
+command /sereload:
+	description: Lets you reload the plugin / skript!
+	aliases: /sreload, /simpleessentialsreload, /simpleessentials:sreload
+	permission: simpleessentials.admin.reload
+	permission message: {@nopermission}
+	trigger:
+		broadcast "&9Simple Essentials &7{@Version} is reloading.."
+		make player execute command "/sk reload SimpleEssentialsV0.4"
+		wait 5 seconds
+		broadcast "&aSimple Essentials {@Version} has succesfully reloaded!"
+		broadcast "&7Please report any issues on the &9Github &7page!"
+
+# Gamemode Commands # 
+
+command /gmc [<player>]:
+	description: Lets you change you or another players gamemode to creative!
+	aliases: /gamemodecreative, /gm1, /gamemodec, /simpleessentials:gmc
+	permission: simpleessentials.gamemode.creative
+	permission message: {@nopermission}
+	trigger:
+		set arg 1's gamemode to creative
+		message "&7You have successfully set &9%arg 1%'s&7 gamemode to &9creative&7!" 
+		
+command /gms [<player>]:
+	description: Lets you change you or another players gamemode to survival!
+	aliases: /gamemodesurvival, /gm0, /gamemodes, /simpleessentials:gms
+	permission: simpleessentials.gamemode.survival
+	permission message: {@nopermission}
+	trigger:
+		set arg 1's gamemode to survival
+		message "&7You have successfully set &9%arg 1%'s&7 gamemode to &9survival&7!" 
+
+command /gma [<player>]:
+	description: Lets you change you or another players gamemode to adventure!
+	aliases: /gamemodeadventure, /gm2, /gamemodea, /simpleessentials:gma
+	permission: simpleessentials.gamemode.adventure
+	permission message: {@nopermission}
+	trigger:
+		set arg 1's gamemode to adventure
+		message "&7You have successfully set &9%arg 1%'s&7 gamemode to &9adventure&7!"
+		
+command /cmdblock:
+	description: Gives you a command block!
+	aliases: /simpleessentials:cmdblock, /commandblock, simpleessentials:commandblock
+	permission: simpleessentials.admin.commandblock
+	permission message: {@nopermission}
+	trigger:
+		make console execute command "give %player% commandblock 1"
+		message "&7%player% has successfully been given a &9Command Block&7!"
+			
+			
+			
+			
+# Other Skripts + Plugin Hooks # 
+
+every 15 minutes:
+	make console execute command "Lagg clear"	# <- Skript ChatCore or FrostClearLag hook #
+ 
+	
+# More hooks coming soon #
+			
+# Elevator Sign Functions | Added 0.3 Update #
+
+on sign change:
+	line 1 is "[Elevator]":
+		line 2 is "Up":
+			player has permission "simpleessentials.elevator.create":
+				set line 1 to "&7[&cElevator&7]"
+				set line 2 to "Up"
+			else:
+				send "{@elevatornopermission}"
+		line 2 is "up":
+			player has permission "simpleessentials.elevator.create":
+				set line 1 to "&7[&cElevator&7]"
+				set line 2 to "Up"
+			else:
+				send "{@elevatornopermission}"
+		line 2 is "uP":
+			player has permission "simpleessentials.elevator.create":
+				set line 1 to "&7[&cElevator&7]"
+				set line 2 to "Up"
+			else:
+				send "{@elevatornopermission}"
+		line 2 is "UP":
+			player has permission "simpleessentials.elevator.create":
+				set line 1 to "&7[&cElevator&7]"
+				set line 2 to "Up"
+			else:
+				send "{@elevatornopermission}"
+on rightclick on sign:
+	line 1 is "&7[&cElevator&7]":
+		line 2 is "Up":
+			player has permission "simpleessentials.elevator.create":
+				set {_loc} to location of player
+				set y-coordinate of {_loc} to 257
+				loop 256 times:
+					remove 1 from the y-coordinate of {_loc}
+					if block at {_loc} is not air or torch or sign or water or lava:
+						teleport player to block above {_loc}
+						stop loop
+						send "&7You have been elevated up!"
+						stop
+			else:
+				send "{@elevatornopermission}"
+			
+# Old elevator signs will still work with the following piece of code #
+
+on rightclick on sign:
+	line 1 is "&1[Elevator]":
+		line 2 is "Up":
+			player has permission "simpleessentials.elevator.create":
+				set {_loc} to location of player
+				set y-coordinate of {_loc} to 257
+				loop 256 times:
+					remove 1 from the y-coordinate of {_loc}
+					if block at {_loc} is not air or torch or sign or water or lava:
+						teleport player to block above {_loc}
+						stop loop
+						message "&7You have been elevated up!"
+						stop
+			else:
+				send "{@elevatornopermission}"			
+			
+			
+# On first join functions #
+on first join:
+	teleport player to {spawn}		
+			
+			
+			
+			
+			
+			
+			
+			
+# Time of day commands #
+
+command /night:
+	description: Sets the ingame server time to night!
+	aliases: /n, /simpleessentials:night, /simpleessentials:n
+	permission: simpleessentials.admin.time
+	permission message: {@nopermission}
+	trigger:
+		set time to 23:59
+		message "&7Ingame server time ( IST ) has successfully been set to &923:59&7!"
+			
+command /day:
+	description: Sets the ingame server time to night!
+	aliases: /d, /simpleessentials:day, /simpleessentials:d
+	permission: simpleessentials.admin.time
+	permission message: {@nopermission}
+	trigger:
+		set time to 05:59
+		message "&7Ingame server time ( IST ) has successfully been set to &905:59&7!"	
+			
+# Chat Commands # 		
+			
+			
+command /clearmychat:
+  permission: simpleessentials.command.clearmychat
+  trigger:
+    message "&7"
+    loop 150 times:
+      message ""
+      message ""
+    message "&7Your chat has been &9cleared!"
+    stop		
+			
+			
+command /spawn [<player>]:
+	aliases: /sp, /simpleessentials:spawn, /simpleessentials:sp
+	description: Teleports you or another player to spawn.
+	permission: simpleessentials.spawn
+	permission message: {@nopermission}
+	trigger:
+		if {spawn} isn't set:
+			message "&7You cannot &9teleport &7to spawn as a spawn has not been set&7!"
+			stop
+		else:
+			argument 1 is not set:
+				teleport player to {spawn}
+				message "&7Teleporting..."
+			else:
+				if sender has permission "simpleessentials.spawn.others":
+					if argument is online:
+						teleport argument to {spawn}
+					if sender is a player:
+						message "&7You have been teleported to spawn by &9%player%&7." to argument 1
+					if sender is not a player:
+						message "&7You have been teleported to spawn by &9Console&7." to argument 1
+						teleport player to {spawn}
+						
+command /setspawn:
+	aliases: spawnset, sethub, hubset, setlobby, lobbyset
+	description: Set a spawn at your current location!
+	permission: simpleessentials.admin.setspawn
+	permission message: {@nopermission}
+	trigger:
+		#message "&7You have &9set spawn&7 at your location!"
+		#set {spawn} to location of player
+		message "&cThis has been disabled from the config file! You may enable it!"	
+command /heal:
+	description: Heals you!
+	aliases: /h, /simpleessentials:heal, /simpleessentials:h
+	permission: simpleessentials.command.heal
+	permission message: {@nopermission}
+	trigger:
+		apply Instant Health to the player for 5 seconds
+		apply Saturation to the player for 5 seconds
+command /plugins:
+	description: A better version of the Minecraft implemented plugin command!
+	aliases: /pl, /plug, /simpleessentials:plugins, /simpleessentials:pl
+	permission: simpleessentials.admin.plugins
+	permission message: {@nopermission}
+	trigger:
+		send "&7This command is currently under development and therefore has been disabled"	
+		
+command /sedisable:
+	description: Shuts down the Simple Essentials Skript!
+	aliases: /disable, /simpleessentialsdisable, /simpleessentials:sedisable
+	permission: simpleessentials.admin.sedisable
+	permission message: {@nopermission}
+	trigger:
+		broadcast "&7Unloading functions and files..."
+		wait 2 seconds
+		broadcast "&7Checking for new version..."
+		wait 2 seconds
+		broadcast "&7Disabling all 24 commands and 75+ aliases..."
+		wait 1 second
+		broadcast "&7Disabling Skript SimpleEssentials {@Version}..."
+		wait 30 tick
+		broadcast "&7Success!"
+		broadcast "&7To re-enable Simple Essentials &9{@Version}&7 type /sk enable SimpleEssentialsV0.4 "
+		make player execute command "sk disable SimpleEssentialsV0.4"
+		
+# Here is the "Help" command, you can edit the way this looks by using Minecraft Color Codes. Check out the Minecraft Color Codes at http://minecraft.tools/en/color-code.php #
+
+command /se [<Text>] [<Integer>]:
+	description: Shows help for SimpleEssentials and all the commands!
+	aliases: /sessential, /simpleessentials:help
+	permission: simpleessentials.command.help
+	permission message: {@nopermission}
+	trigger:
+		if arg 1 is not set:
+			message "&7 -> &9Invalid command, type &7/se help [<integer>]"
+		if arg 1 is "help":
+			if arg 2 is 1:
+				message "&7&m----------&7[ &9SimpleEssentials Help &7&k|&e Page 1 &7]&m----------"
+				message "&7 -> &9/se help &7- To See Info About The Plugin"
+				message "&7 -> &9/console [<command>] &7- Execute commands through the console ingame."
+				message "&7 -> &9/discord &7- To see the servers Discord link"
+				message "&7 -> &9/serverip &7- To see the servers Ip adress"
+				message "&7 -> &9/store &7- To see the servers donation / shop link"
+			if arg 2 is 2:
+				message "&7&m----------&7[ &9SimpleEssentials Help &7&k|&e Page 2 &7]&m----------"
+				message "&7 -> &9/cmdblock &7- To give you or another player a command block"
+				message "&7 -> &9/gmc [<player>]&7- To give you or another player the creative gamemode"
+				message "&7 -> &9/gms [<player>]&7- To give you or another player the survival gamemode"
+				message "&7 -> &9/gma [<player>]&7- To give you or another player the adventure gamemode"
+				message "&7 -> &9/night &7- To set the ingame server time to night"
+			if arg 2 is 3:
+				message "&7&m----------&7[ &9SimpleEssentials Help &7&k|&e Page 3 &7]&m----------"
+				message "&7 -> &9/day &7- To set the ingame server time to day"
+				message "&7 -> &9/clearmychat &7- Clears your chat"
+				message "&7 -> &9/setspawn &7- Lets the player set a server spawnpoint"
+				message "&7 -> &9/spawn &7- Lets a player teleport to the server spawnpoint"
+				message "&7 -> &9/plugins &7- Shows you a better / more clear version of /pl"
+				message "&7 -> &9/heal &7- Heals the player, simple as that"
+			if arg 2 is 4:
+				message "&7&m----------&7[ &9SimpleEssentials Help &7&k|&e Page 4 &7]&m----------"	
+				message "&7 -> &9/sreload &7- Reloads the skript, use with caution"
+				message "&7 -> &9/sedisable &7- Disables the skript, use with caution"

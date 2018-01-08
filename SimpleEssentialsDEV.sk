@@ -111,6 +111,13 @@ command /cmdblock:
 	trigger:
 		make console execute command "give %player% commandblock 1"
 		message "&7%player% has successfully been given a &9Command Block&7!"
+		stop
+		
+command /playercount:
+	description: Tells you how many players are currently on the server!
+	trigger:
+		message "&aPlayer Count: &9%{onlineplayers}%&e/&9%{MaxPlayers}%"
+
 			
 			
 			

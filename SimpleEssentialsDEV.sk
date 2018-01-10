@@ -1,6 +1,6 @@
 
 options:
-	Version: V 0.5-A
+	Version: V 0.6-A
 	nopermission: &7You do not have the required permissions to execute this command, please contact a server administrator if you think this is wrong!
 	elevatornopermission: &cYou do not have the correct permissions to create Elevator Signs!
 	serverip: play.example.com # <- Put your server IP in here # 
@@ -111,13 +111,6 @@ command /cmdblock:
 	trigger:
 		make console execute command "give %player% commandblock 1"
 		message "&7%player% has successfully been given a &9Command Block&7!"
-		stop
-		
-command /playercount:
-	description: Tells you how many players are currently on the server!
-	trigger:
-		message "&aPlayer Count: &9%{onlineplayers}%&e/&9%{MaxPlayers}%"
-
 			
 			
 			
@@ -199,7 +192,45 @@ on first join:
 			
 			
 			
-			
+# On command functions, this blocks the output of a command and replaces it with a message of your choice. #
+
+on command:
+	if command is "pl":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "bukkit:pl":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "plugins":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "version":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "icanhasbukkit":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "help":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "bukkit:help":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "?":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event
+	if command is "bukkit:?":
+		if player doesn't have permission "simpleessentials.bypass":
+			send "&cYou do not have the permission chatcore.admin and therefore cannot perform this operation. Please contact your server administrator if this is wrong."
+			cancel event			
 			
 			
 			
